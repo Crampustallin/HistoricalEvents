@@ -1,7 +1,7 @@
 import Swiper from 'swiper';
 import { Navigation, Pagination } from 'swiper/modules';
 
-const swiper = new Swiper(".mySwiper", {
+const swiper = new Swiper(".events-swiper", {
 	modules: [Navigation, Pagination],
 	slidesPerView: 4,
 	spaceBetween: 30,
