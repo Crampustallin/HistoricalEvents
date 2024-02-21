@@ -1,29 +1,42 @@
 const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-	entry: './src/index.ts',   
-	output: {
-		path: path.resolve(__dirname, 'dist'),
-		filename: 'bundle.js'
-	},
-	module: {
-		rules: [
-			{
-				test: /\.tsx?$/,         
-				use: 'ts-loader',         
-				exclude: /node_modules/
-			},
-			{
-				test: /\.css$/,  
-				use: ['style-loader', 'css-loader']       
-			},
-			{
-				test: /\.(png|jpg|jpeg|gif|svg)$/,        
-				type: 'asset/resource'       
-			}
-		]
-	},
-	resolve: {
-		extensions: ['.tsx', '.ts', '.js']   
-	}
+  entry: './src/index.js', 
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/, 
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader' 
+        }
+      },
+      {
+        test: /\.scss$/, 
+        use: [
+          MiniCssExtractPlugin.loader, 
+          'css-loader', 
+          'sass-loader' 
+        ]
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/i, 
+        type: 'asset/resource' 
+      }
+    ]
+  },
+  plugins: [
+    new MiniCssExtractPlugin({ 
+      filename: 'styles.css'
+    })
+  ],
+  resolve: {
+    extensions: ['.js', '.scss'] 
+  }
 };
+
