@@ -31,10 +31,13 @@ module.exports = {
 		]
 	},
 	plugins: [
-		new HtmlWebpackPlugin()
+		new HtmlWebpackPlugin({
+			template: './src/index.html'
+		}),
 	],
 	resolve: {
 		extensions: ['.tsx','.ts','.js', '.scss'] 
-	}
+	},
+	mode: 'development',
 };
 
