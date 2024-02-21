@@ -1,0 +1,32 @@
+{
+  "name": "historicalevents",
+  "version": "1.0.0",
+  "description": "\"The interview asignment\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Crampustallin/HistoricalEvents.git"
+  },
+  "keywords": [
+    "TypeScript",
+    "JS",
+    "Swiper"
+  ],
+  "author": "Mukhammmed",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Crampustallin/HistoricalEvents/issues"
+  },
+  "homepage": "https://github.com/Crampustallin/HistoricalEvents#readme",
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.3",
+    "gsap": "^3.12.5",
+    "swiper": "^11.0.6",
+    "typescript": "^5.3.3",
+    "webpack": "^5.90.3",
+    "webpack-cli": "^5.1.4"
+  }
+}
