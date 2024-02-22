@@ -1,20 +1,39 @@
-@use '_mixins' as mixins;
-@use '_reset';
-@use '_variables' as vars;
+@use 'mixins';
+@use 'reset';
+@use 'variables';
 @use 'swiperstyles.scss';
+@use 'years-styles.scss';
 
     html,
     body {
       position: relative;
       height: 100%;
+      padding: 0 5% 0 10%;
     }
 
     body {
-      background: #ffff;
-      font-family: vars.$main-font, Arial, sans-serif;
-      font-size: 14px;
-      color: vars.$font-color;
-      margin: 0;
-      padding: 0;
+      background: #F4F5F9;
+      font-family: variables.$main-font;
+      color: variables.$font-color;
     }
 
+    .header {
+	    position: absolute;
+	    top: 10%;
+	    padding-left: 1em;
+	    border-left: 5px solid;
+	    border-image: linear-gradient(to bottom, variables.$start-color, variables.$end-color) 1;
+	    h1 {
+	    max-width: 20%;
+	    font-size: variables.$header-size;
+    }
+    }
+
+@media (max-width: 768px) {
+	html, body {
+		padding: 0;
+	}
+	.header h1 {
+	}
+		
+}
