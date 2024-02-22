@@ -1,9 +1,9 @@
 import Swiper from 'swiper';
-import { Navigation, Pagination } from 'swiper/modules';
+import { Navigation, FreeMode } from 'swiper/modules';
 
 const swiper = new Swiper(".events-swiper", {
-	modules: [Navigation, Pagination],
-	slidesPerView: 4,
+	modules: [Navigation, FreeMode],
+	slidesPerView: 3,
 	spaceBetween: 30,
 	grabCursor: true,
 	freeMode: true,

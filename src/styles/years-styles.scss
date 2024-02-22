@@ -1,16 +1,19 @@
 
 .years-container {
-	height: 75%;
+	height: 70%;
 	width: 100%;
 	display: grid;
 	place-items: center;
+	padding-top: 10%;
 	.years {
+		position:absolute;
 		width: 70%;
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
+		z-index: 1;
 		.start-year, .end-year {
-			font-size: 10em;
+			font-size: 9.5em;
 		}
 		.start-year {
 			color: #5D5FEF;
@@ -21,6 +24,7 @@
 	}
 }
 
+
 @media (max-width: 768px) {
 
 	.years-container, .swiper {
@@ -28,9 +32,9 @@
 	}
 	.years-container {
 		width: 100%;
-		display: grid;
-		place-items: center;
+		align-items: end;
 		.years {
+			padding-bottom: 10%;
 			.start-year, .end-year {
 				font-size: 5em;
 			}

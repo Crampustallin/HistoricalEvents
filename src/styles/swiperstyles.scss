@@ -1,9 +1,10 @@
 @import 'swiper/scss';
 @import 'swiper/scss/navigation';
 
-.swiper {
+.events-swiper {
 	width: 100%;
-	height: 25%;
+	height: 30%;
+	padding: 5% 0;
 }
 
 
@@ -36,6 +37,11 @@
 }
 
 @media (max-width: 768px) {
+	.events-swiper {
+		padding: 10% 0;
+		border-top: 1px solid #C7CDD9;
+		overflow: visible;
+	}
 	.swiper-button-next, .swiper-button-prev {
 		display:none;
 	}

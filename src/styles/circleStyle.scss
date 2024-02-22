@@ -1,0 +1,30 @@
+.circle {
+  width: 600px;
+  height: 600px;
+  background: transparent;
+  border-radius: 50%;
+  color: #fff;
+  position: relative;
+  border: 2px solid #d6aef1;
+}
+.date-list-row,
+.dots-list-row {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.dots {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: #d6aef1;
+  border-radius: 50%;
+  display: inline-block;
+  transition: ease 0.4s;
+
+  &.active {
+    background-color: #9720e5;
+  }
+}
