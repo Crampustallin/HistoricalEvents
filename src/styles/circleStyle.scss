@@ -17,12 +17,14 @@
   transform: translate(-50%, -50%);
 }
 
-.date-list {
+.dots-list-row .date-list {
 	position: absolute;
 	top:50%;
 	left: 50%;
 	color: variables.$font-color;
 	display: none;
+  transition: ease 0.4s;
+  transform: translate(-50%, -50%);
 	.inner-text {
 		position: relative;
 		gap: 10px;
