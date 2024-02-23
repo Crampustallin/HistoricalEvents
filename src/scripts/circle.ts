@@ -1,4 +1,6 @@
 import gsap from 'gsap'
+import setAnimationToYear from './gsapYears';
+import updateSwiper from './swipe';
 
 let circle:HTMLElement | null = document.querySelector(".circle");
 let dots: HTMLElement[] = gsap.utils.toArray<HTMLElement>(".dots");
@@ -6,6 +8,8 @@ let dateList: HTMLElement[] = gsap.utils.toArray<HTMLElement>(".date-list");
 let slice = 360 / dots.length;
 let curRotation = 0;
 let currentDot:HTMLElement | null = document.querySelector("div .active");
+let startYear: HTMLElement | null = document.querySelector(".start-year");
+let endYear: HTMLElement | null = document.querySelector(".end-year");
 const prevBtn = document.getElementById("prev-button");
 const nextBtn = document.getElementById("next-button");
 
@@ -43,8 +47,7 @@ let removeCurrentActive = () => {
 
 removeCurrentActive();
 
-  const rotationBtnComplete = (dot: HTMLElement | null | undefined) => {
-	  console.log(dot);
+const rotationBtnComplete = (dot: HTMLElement | null | undefined) => {
 	  if(dot) {
 		  dot.classList.add('active');
 		  dot.firstElementChild?.classList.add('active');
@@ -52,11 +55,20 @@ removeCurrentActive();
 	  }
 };
 
+let updateYears = (dot: HTMLElement) => {
+			let prevYear = parseInt(currentDot?.querySelector('.date-text')?.innerHTML ?? '0');
+			setAnimationToYear(startYear, prevYear);
+
+			let nextYear = parseInt(dot.querySelector('.date-text')?.innerHTML ?? '0');
+			setAnimationToYear(endYear, nextYear);
+			updateSwiper();
+}
+
 let onClickCard = (event: MouseEvent) => {
 	let dot = event.target as HTMLElement;
 	if(dot && currentDot !== dot)
 		{
-			let style = dot?.getAttribute('style');
+			let style = dot.getAttribute('style');
 			let deg: number = 0;
 
 			if(style) {
@@ -66,7 +78,7 @@ let onClickCard = (event: MouseEvent) => {
 				}
 			}
 			curRotation = deg;
-
+			updateYears(dot);
 			removeCurrentActive();
 
 			gsap.to(circle, {
@@ -87,6 +99,7 @@ if(prevBtn) {
 		if(prevBtn.getAttribute('disabled') !== 'true')
 			{
 				let prevDot = currentDot?.nextElementSibling as HTMLElement;
+				updateYears(prevDot);
 				removeCurrentActive();
 				curRotation += slice;
 				gsap.to(circle, {
@@ -104,6 +117,7 @@ if(nextBtn) {
 		if(nextBtn.getAttribute('disabled') !== 'true')
 			{
 				let nextDot = currentDot?.previousElementSibling as HTMLElement;
+				updateYears(nextDot);
 				removeCurrentActive();
 				curRotation -= slice;
 				gsap.to(circle, {

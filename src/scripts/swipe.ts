@@ -3,14 +3,12 @@ import Swiper from 'swiper';
 import { Navigation, FreeMode, Pagination } from 'swiper/modules';
 
 let swiper: Swiper;
+let isMobileDevice = window.matchMedia("(max-width: 768px)").matches;
 
-function updateSwiper() {
-	const isMobileDevice = window.matchMedia("(max-width: 768px)").matches;
-	if (swiper) {
-		swiper.destroy();
+let createSwiper = (isMobileDevice: boolean) => {
+	if(swiper) {
+			swiper.destroy();
 	}
-
-
 	swiper = new Swiper(".events-swiper", {
 		modules: [Navigation, FreeMode, Pagination],
 		slidesPerView: isMobileDevice ? 2 : 3,
@@ -28,13 +26,20 @@ function updateSwiper() {
 			clickable: true,
 		}
 	});
-
-gsap.from(".events-swiper", { opacity: 0, y: 50, duration: 1, ease: "power2.out" });
-
+	gsap.from(".events-swiper", { opacity: 0, y: 50, duration: 1, ease: "power2.out" });
 }
 
-updateSwiper();
+function updateSwiperForFlipSize() {
+	isMobileDevice = window.matchMedia("(max-width: 768px)").matches;
+	if (isMobileDevice) {
+		createSwiper(isMobileDevice);
+	}
+}
 
-window.addEventListener("resize", updateSwiper);
+createSwiper(isMobileDevice);
+
+let updateSwiper = () => createSwiper(isMobileDevice);
+
+window.addEventListener("resize", updateSwiperForFlipSize);
 
 export default updateSwiper;

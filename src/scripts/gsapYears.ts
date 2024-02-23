@@ -20,7 +20,7 @@ const setYearAnimation = ([prevYear, el]: [number, HTMLElement]) => gsap.from(el
 });
 
 
-let setAnimationToYear = (...args: any[]) => compose(getPrevYear, 
+let setAnimationToYear = async (...args: any[]) => compose(getPrevYear, 
 						     setYearAnimation)(args);
 
 export default setAnimationToYear;
