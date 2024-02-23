@@ -13,11 +13,28 @@
 
     body {
       margin: 0 7% 0 15%;
-      background: #F4F5F9;
+      background: variables.$body-color;
       font-family: variables.$main-font;
       color: variables.$font-color;
       border-left: 1px solid #D4D4D4;
       border-right: 1px solid #D4D4D4;
+      	.vertical-line {
+		top: 0;
+		left: 50%;
+		width: 1px;
+		height: 100%;
+	}
+	.horizontal-line {
+		top: 50%;
+		width: 100%;
+		height: 1px;
+		transform: translateY(-50%);
+	}
+	.vertical-line, .horizontal-line {
+		position: absolute;
+		background-color: variables.$border-color;
+		z-index: -1;
+	}
     }
 
     .header {
@@ -45,6 +62,9 @@
 			line-height: 1;
 			font-size: 2em;
 		}
+	}
+	.horizontal-line, .vertical-line {
+		display: none;
 	}
 		
 }

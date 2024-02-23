@@ -1,10 +1,12 @@
+@use 'variables';
+
 .circle {
   width: 25rem;
   height: 25rem;
   background: transparent;
   border-radius: 50%;
   color: #fff;
-  position: relative;
+  position: absolute; 
   border: 1px solid #D4D4D4;
 }
 .date-list-row,
@@ -28,16 +30,15 @@
   &.active {
 	  width: 2.5em;
 	  height: 2.5em;
-	  border: 2px solid #D4D4D4;
-  }
-  :hover {
+	  border: 1px solid #D4D4D4;
+	  background: variables.$body-color;
   }
 }
 
 .dots:hover {
 	  width: 2.5em;
 	  height: 2.5em;
-	  background-image: none;
+	  background: variables.$body-color;
 	  border: 1px solid #D4D4D4;
 }
 
