@@ -1,20 +1,16 @@
 import gsap from 'gsap'
+
 let wheel:HTMLElement | null = document.querySelector(".circle");
-let active:HTMLElement | null = document.querySelector(".active");
 let dots: HTMLElement[] = gsap.utils.toArray<HTMLElement>(".dots");
-let	slice = 360 / dots.length;
-let	curRotation = 0;
-let	currentDot:HTMLElement | null = document.querySelector(".active"); // keep track of last clicked card so we can put it back
-let center: number;
-let DEG2RAD: number;
-let radius: number;
+let slice = 360 / dots.length;
+let currentDot:HTMLElement | null = document.querySelector(".active"); // keep track of last clicked card so we can put it back
 
 
 function setup() {
-	radius = wheel?.offsetWidth ?? 0,
-		DEG2RAD = Math.PI / 180;
+	let radius: number = wheel?.offsetWidth ?? 0;
+	let DEG2RAD: number = Math.PI / 180;
 	radius /= 2;
-	center = radius;
+	let center: number = radius;
 	gsap.set(dots, {
 		x: i => radius * Math.sin(i * slice * DEG2RAD),
 		y: i => radius * Math.cos(i * slice * DEG2RAD),
@@ -32,41 +28,25 @@ setup();
 };
 
 let onClickCard = (event: MouseEvent) => {
-  let desiredDot = 45;
-  let dot = event.target as HTMLElement;
-let clientRect = currentDot?.getBoundingClientRect();
-  if(currentDot && clientRect)
-	  {
-		  let dRect = dot.getBoundingClientRect();
-		  let AB = { x: (clientRect?.x + clientRect.width) - center,
-			  y: (clientRect.y + clientRect.height) - center
-		  }
-		  let AC = { x: (dRect.x + dRect.width) - center,
-			  y: (dRect.y + dRect.height) - center
-		  }
-
-		  console.log(clientRect.y + " " + clientRect.x);
-
-		  const distance = Math.sqrt(Math.pow(AB.x - AC.x, 2) + Math.pow(AB.y - AC.y, 2));
-		  const cosAlpha = (2 * Math.pow(radius, 2) - Math.pow(distance, 2)) / (2 * Math.pow(radius, 2));
-
-		desiredDot = Math.acos(cosAlpha);  
-		console.log(desiredDot);
-	  }
-  console.log(curRotation);
-  gsap.to(wheel, {
-    duration: 0.25,
-    ease: "power1.inOut",
-    rotation: desiredDot * DEG2RAD , 
-    overwrite: "auto",
-    onComplete: rotationBtnComplete,
-  }).then(() => {
-	  if(currentDot) {
-	  }
-	  dot.classList.add('active');
-	  console.log(currentDot);
-	  currentDot = dot;
-  });
+	let dot = event.target as HTMLElement;
+	let style = dot?.getAttribute('style');
+	let deg: number = 0;
+	if(style) {
+		let s = style.match(/rotate\((\d+)deg\)/);
+		if(s && s[1]) {
+			deg = Number.parseInt(s[1]);
+		}
+	}
+	gsap.to(wheel, {
+		duration: 0.25,
+		ease: "power1.inOut",
+		rotation:  deg - 150, 
+		overwrite: "auto",
+		onComplete: rotationBtnComplete,
+	}).then(() => {
+		dot.classList.add('active');
+		currentDot = dot;
+	});
 };
 
 

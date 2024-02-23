@@ -35,7 +35,9 @@
 	font-size: 0.7em;
 	font-weight: bold;
 }
-
+.swiper-button-disabled {
+	display: none;
+}
 @media (max-width: 768px) {
 	.events-swiper {
 		padding: 10% 0;

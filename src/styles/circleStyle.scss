@@ -1,11 +1,11 @@
 .circle {
-  width: 600px;
-  height: 600px;
+  width: 25rem;
+  height: 25rem;
   background: transparent;
   border-radius: 50%;
   color: #fff;
   position: relative;
-  border: 2px solid #d6aef1;
+  border: 1px solid #D4D4D4;
 }
 .date-list-row,
 .dots-list-row {
@@ -17,17 +17,28 @@
 
 .dots {
   position: absolute;
-  width: 16px;
-  height: 16px;
-  background: #d6aef1;
+  width: 0.4em;
+  height: 0.4em;
+  background: #42567A;
   border-radius: 50%;
   display: inline-block;
   transition: ease 0.4s;
   transform: translate(-50%, -50%);
 
   &.active {
-    background-color: #9720e5;
+	  width: 2.5em;
+	  height: 2.5em;
+	  border: 2px solid #D4D4D4;
   }
+  :hover {
+  }
+}
+
+.dots:hover {
+	  width: 2.5em;
+	  height: 2.5em;
+	  background-image: none;
+	  border: 1px solid #D4D4D4;
 }
 
 @media (max-width: 768px) {
