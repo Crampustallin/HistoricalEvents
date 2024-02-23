@@ -1,7 +1,9 @@
 import { gsap } from "gsap";
-import './common';
+import compose from './common';
 
-const getPrevYear = (el:HTMLElement, newYear: number) => {
+const getPrevYear = ([el, newYear]: [HTMLElement, number]) => {
+	console.log(el);
+	console.log(newYear);
 	let prevYear:Number = Number.parseInt(el.innerText);
 	el.innerHTML = newYear.toString();
 	return [prevYear, el];
@@ -9,7 +11,7 @@ const getPrevYear = (el:HTMLElement, newYear: number) => {
 
 const setYearAnimation = ([prevYear, el]: [number, HTMLElement]) => gsap.from(el, {
 		textContent: prevYear,
-		duration: 4,
+		duration: 1,
 		ease: "power1.in",
 		snap: { textContent: 1 },
 		stagger: {
@@ -20,3 +22,5 @@ const setYearAnimation = ([prevYear, el]: [number, HTMLElement]) => gsap.from(el
 
 let setAnimationToYear = (...args: any[]) => compose(getPrevYear, 
 						     setYearAnimation)(args);
+
+export default setAnimationToYear;

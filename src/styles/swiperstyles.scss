@@ -1,10 +1,11 @@
+@use 'variables';
 @import 'swiper/scss';
 @import 'swiper/scss/navigation';
 @import 'swiper/scss/pagination';
 
 .events-swiper {
 	width: 90%;
-	height: 30%;
+	height: 35%;
 }
 
 
@@ -13,8 +14,19 @@
 	font-size: 18px;
 	background: none;
 	display: flex;
+	flex-direction: column;
+	text-align: justify;
 	justify-content: center;
-	align-items: center;
+	align-items: flex-start;
+	h3 {
+		font-weight: 400;
+		font-family: variables.$article-header-font;
+		color: #3877EE;
+		margin-bottom: 15px;
+	}
+	p {
+		line-height: 30px;
+	}
 }
 
 .swiper-slide img {
@@ -47,6 +59,14 @@
 		padding: 10% 0;
 		border-top: 1px solid #C7CDD9;
 		overflow: visible;
+		.swiper-slide {
+			justify-content: flex-start;
+			opacity: 0.2;
+			 transition: opacity 0.2s ease, transform 0.2s ease;
+		}
+		.swiper-slide-active {
+			opacity: 1;
+		}
 	}
 	.swiper-button-next, .swiper-button-prev {
 		display:none;
