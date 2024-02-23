@@ -41,6 +41,8 @@ let removeCurrentActive = () => {
 		}
 }
 
+removeCurrentActive();
+
   const rotationBtnComplete = (dot: HTMLElement | null | undefined) => {
 	  console.log(dot);
 	  if(dot) {

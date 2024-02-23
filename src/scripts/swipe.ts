@@ -7,6 +7,7 @@ const swiper = new Swiper(".events-swiper", {
 	spaceBetween: 30,
 	grabCursor: true,
 	freeMode: true,
+	effect: "overflow",
 	navigation: {
 		nextEl: ".swiper-button-next",
 		prevEl: ".swiper-button-prev",

@@ -3,9 +3,8 @@
 @import 'swiper/scss/pagination';
 
 .events-swiper {
-	width: 100%;
+	width: 90%;
 	height: 30%;
-	padding: 5% 0;
 }
 
 
@@ -27,6 +26,7 @@
 
 .swiper-button-next, .swiper-button-prev {
 	width: calc(var(--swiper-navigation-size) / 33 * 27);
+	top: var(--swiper-navigation-top-offset, 85%);
 	height: calc(var(--swiper-navigation-size) / 33 * 27);
 	border-radius: 50px;
 	background-color: #FFFFFF;
