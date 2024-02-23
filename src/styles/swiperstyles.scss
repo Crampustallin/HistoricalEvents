@@ -1,5 +1,6 @@
 @import 'swiper/scss';
 @import 'swiper/scss/navigation';
+@import 'swiper/scss/pagination';
 
 .events-swiper {
 	width: 100%;
@@ -38,6 +39,9 @@
 .swiper-button-disabled {
 	display: none;
 }
+.swiper-pagination {
+	display: none;
+}
 @media (max-width: 768px) {
 	.events-swiper {
 		padding: 10% 0;
@@ -46,5 +50,8 @@
 	}
 	.swiper-button-next, .swiper-button-prev {
 		display:none;
+	}
+	.swiper-pagination {
+		display: block;
 	}
 }

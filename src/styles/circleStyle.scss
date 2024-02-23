@@ -28,9 +28,9 @@
   transform: translate(-50%, -50%);
 
   &.active {
-	  width: 2.5em;
-	  height: 2.5em;
-	  border: 1px solid #D4D4D4;
+	  width: 2.7em;
+	  height: 2.7em;
+	  border: 1px solid rgba(48, 62, 88, 0.5);
 	  background: variables.$body-color;
   }
 }
@@ -39,7 +39,7 @@
 	  width: 2.5em;
 	  height: 2.5em;
 	  background: variables.$body-color;
-	  border: 1px solid #D4D4D4;
+	  border: 1px solid rgba(48, 62, 88, 0.5);
 }
 
 @media (max-width: 768px) {

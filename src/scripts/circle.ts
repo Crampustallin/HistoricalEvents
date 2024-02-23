@@ -23,8 +23,8 @@ function setup() {
 setup();
 
   const rotationBtnComplete = () => {
-	  let dot = document.querySelector('.active');
-	  dot?.classList.remove('active');
+	  //let dot = document.querySelector('.active');
+	  //dot?.classList.remove('active');
 };
 
 let onClickCard = (event: MouseEvent) => {
@@ -37,15 +37,17 @@ let onClickCard = (event: MouseEvent) => {
 			deg = Number.parseInt(s[1]);
 		}
 	}
+	if(currentDot) {
+		currentDot.classList.remove('active');
+	}
+	dot.classList.add('active');
+	currentDot = dot;
 	gsap.to(wheel, {
-		duration: 0.25,
-		ease: "power1.inOut",
+		duration: 0.75,
+		ease: "none",
 		rotation:  deg - 150, 
 		overwrite: "auto",
 		onComplete: rotationBtnComplete,
-	}).then(() => {
-		dot.classList.add('active');
-		currentDot = dot;
 	});
 };
 
