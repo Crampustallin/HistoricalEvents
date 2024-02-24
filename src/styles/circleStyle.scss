@@ -19,21 +19,20 @@
 
 .dots-list-row .date-list {
 	position: absolute;
+	pointer-events: none;
 	top:50%;
 	left: 50%;
 	color: variables.$font-color;
 	display: none;
-  transition: ease 0.4s;
-  transform: translate(-50%, -50%);
+	transition: ease 0.4s;
+	transform: translate(-50%, -50%);
 	.inner-text {
 		position: relative;
 		gap: 10px;
 		span {
 			display: inline-block;
 		}
-		.date-text {
-			font-weight: 900;
-		}
+		font-weight: 900;
 	}
 	&.active {
 		display: block;
@@ -55,6 +54,9 @@
 	  height: 2.7em;
 	  border: 1px solid rgba(48, 62, 88, 0.5);
 	  background: variables.$body-color;
+	  .date-list {
+		  display: block;
+	  }
   }
 }
 
@@ -63,6 +65,9 @@
 	  height: 2.7em;
 	  background: variables.$body-color;
 	  border: 1px solid rgba(48, 62, 88, 0.5);
+	  .date-list {
+		  display: block;
+	  }
 }
 
 @media (max-width: 768px) {

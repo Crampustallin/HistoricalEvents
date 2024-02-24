@@ -8,9 +8,10 @@
 	.years {
 		position:absolute;
 		width: 45rem;
-		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
+		display: none;
+		z-index: -1;
 		.start-year, .end-year {
 			font-size: 9.5em;
 		}
@@ -19,6 +20,9 @@
 		}
 		.end-year {
 			color: #EF5DA8;
+		}
+		&.active {
+			display: flex;
 		}
 	}
 	.manual-buttons {

@@ -1,4 +1,3 @@
-const eventsSwiper: HTMLElement | null = document.querySelector(".events-swiper");
 const yearsContainer: HTMLElement | null = document.querySelector(".years-container");
 const dotsListRow: HTMLElement | null = document.querySelector('.dots-list-row');
 interface YearsData {
@@ -9,9 +8,7 @@ interface YearsData {
     content: string;
   }[];
 }
-
-let load = () => {
-	const movieData: YearsData[] = [{
+	var movieData: YearsData[] = [{
 
 		years: { "from": 2010, "to": 2015 },
 		title: "Книги",
@@ -89,18 +86,23 @@ let load = () => {
 		]
 	}];
 
+let load = () => {
+
 	let generateFront = (Obj: YearsData, i: number) => {
 
 		let loadDots = () => {
 			if(dotsListRow) {
 				const dots: HTMLElement = document.createElement('span');
 				dots.className = "dots";
+				if(i === 0) {
+					dots.classList.add('active');
+				}
 				const dateList: HTMLElement = document.createElement('span');
 				dateList.className = "date-list";
 				const innerText: HTMLElement = document.createElement('span');
-				innerText.className = "innerText";
+				innerText.className = "inner-text";
 				innerText.innerHTML = (++i).toString();
-				dots.setAttribute("period" + i, "")
+				dots.setAttribute("date", "period" + i)
 				dateList.append(innerText);
 				dots.append(dateList);
 				dotsListRow.append(dots);
@@ -118,7 +120,10 @@ let load = () => {
 				endYear.innerHTML = Obj.years.to.toString();
 				const years = document.createElement('div');
 				years.className = "years";
-				years.setAttribute("period" + i, "");
+				if(i === 1) {
+					years.classList.add('active');
+				}
+				years.setAttribute("date", "period" + i);
 				years.append(startYear);
 				years.append(endYear);
 				yearsContainer.append(years);
@@ -126,9 +131,14 @@ let load = () => {
 		}
 
 		let loadSliderObjects = () => {
-			if(eventsSwiper) {
+			const eventsSwiper: HTMLElement = document.createElement("div");
+			eventsSwiper.className = "swiper";
+			eventsSwiper.classList.add("events-swiper");
 				const swiperWrapper: HTMLElement = document.createElement('div');
 				swiperWrapper.className = "swiper-wrapper";
+				if(i === 1) {
+					eventsSwiper.classList.add('active');
+				}
 				Obj.paragraphs.map(content => {
 					const swiperSlide: HTMLElement = document.createElement('div');
 					swiperSlide.className = "swiper-slide";
@@ -140,9 +150,9 @@ let load = () => {
 					swiperSlide.append(paragraph);
 					swiperWrapper.append(swiperSlide);
 				});
-				swiperWrapper.setAttribute("period" + i, "");
+				eventsSwiper.setAttribute("date", "period" + i);
 				eventsSwiper.appendChild(swiperWrapper);
-			}
+				document.querySelector(".years-container")?.insertAdjacentElement('afterend',eventsSwiper);
 		}
 
 		return [loadDots, loadYears, loadSliderObjects];

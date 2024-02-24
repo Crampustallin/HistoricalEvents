@@ -7,9 +7,7 @@ let dots: HTMLElement[] = gsap.utils.toArray<HTMLElement>(".dots");
 let dateList: HTMLElement[] = gsap.utils.toArray<HTMLElement>(".date-list");
 let slice = 360 / dots.length;
 let curRotation = 0;
-let currentDot:HTMLElement | null = document.querySelector("div .active");
-let startYear: HTMLElement | null = document.querySelector(".start-year");
-let endYear: HTMLElement | null = document.querySelector(".end-year");
+let currentDot: NodeListOf<HTMLElement> = document.querySelectorAll(".active");
 const prevBtn = document.getElementById("prev-button");
 const nextBtn = document.getElementById("next-button");
 
@@ -30,43 +28,39 @@ function setup() {
 		yPercent: -50
 	});
 	gsap.set(dateList, {
-		ease: "power1.in"
+		rotation: i => -(i * slice),
 	});
 }
 
 setup();
 
 
-let removeCurrentActive = () => {
-	if(currentDot)
+
+let removeCurrentActive = (current: HTMLElement) => {
+	if(current)
 		{
-			currentDot.classList.remove('active');
-			currentDot.firstElementChild?.classList.remove('active');
+			current.classList.remove('active');
+			current.firstElementChild?.classList.remove('active');
 		}
 }
 
-removeCurrentActive();
 
 const rotationBtnComplete = (dot: HTMLElement | null | undefined) => {
 	  if(dot) {
-		  dot.classList.add('active');
-		  dot.firstElementChild?.classList.add('active');
-		  currentDot = dot;
+		  let prevYears = currentDot[1];
+		  currentDot = document.querySelectorAll(`[date=${dot.getAttribute('date')}]`);
+		  currentDot.forEach(elem => elem.classList.add('active'));
+		  updateSwiper();
+		  setAnimationToYear(currentDot[1].firstChild, prevYears.firstChild?.textContent, currentDot[1].firstChild?.textContent);
+		  setAnimationToYear(currentDot[1].lastChild, prevYears.lastChild?.textContent, currentDot[1].lastChild?.textContent);
 	  }
 };
 
-let updateYears = (dot: HTMLElement) => {
-			let prevYear = parseInt(currentDot?.querySelector('.date-text')?.innerHTML ?? '0');
-			setAnimationToYear(startYear, prevYear);
-
-			let nextYear = parseInt(dot.querySelector('.date-text')?.innerHTML ?? '0');
-			setAnimationToYear(endYear, nextYear);
-			updateSwiper();
-}
 
 let onClickCard = (event: MouseEvent) => {
 	let dot = event.target as HTMLElement;
-	if(dot && currentDot !== dot)
+			currentDot.forEach((current:HTMLElement) => removeCurrentActive(current));
+	if(dot && currentDot[0] !== dot)
 		{
 			let style = dot.getAttribute('style');
 			let deg: number = 0;
@@ -78,19 +72,17 @@ let onClickCard = (event: MouseEvent) => {
 				}
 			}
 			curRotation = deg;
-			updateYears(dot);
-			removeCurrentActive();
+			rotationBtnComplete(dot);
 
 			gsap.to(circle, {
 				duration: 0.75,
 				ease: "none",
 				rotation:  deg - 150, 
 				overwrite: "auto",
-			}).then(() => rotationBtnComplete(dot));
+			});
 			updateButtonState(dot);
 		}
 };
-
 
 dots.forEach((dot) => dot.addEventListener("click", onClickCard));
 
@@ -98,15 +90,15 @@ if(prevBtn) {
 	prevBtn.addEventListener("click", () => {
 		if(prevBtn.getAttribute('disabled') !== 'true')
 			{
-				let prevDot = currentDot?.nextElementSibling as HTMLElement;
-				updateYears(prevDot);
-				removeCurrentActive();
+				let prevDot = currentDot[0]?.nextElementSibling as HTMLElement;
+			currentDot.forEach((current:HTMLElement) => removeCurrentActive(current));
+			rotationBtnComplete(prevDot);
 				curRotation += slice;
 				gsap.to(circle, {
 					duration: 0.25,
 					ease: "power1.inOut",
 					rotation: curRotation - 150,
-				}).then(() => rotationBtnComplete(prevDot));
+				});
 				updateButtonState(prevDot);
 			}
 	});
@@ -116,15 +108,15 @@ if(nextBtn) {
 	nextBtn.addEventListener("click", () => {
 		if(nextBtn.getAttribute('disabled') !== 'true')
 			{
-				let nextDot = currentDot?.previousElementSibling as HTMLElement;
-				updateYears(nextDot);
-				removeCurrentActive();
+				let nextDot = currentDot[0]?.previousElementSibling as HTMLElement;
+			currentDot.forEach((current:HTMLElement) => removeCurrentActive(current));
+			rotationBtnComplete(nextDot);
 				curRotation -= slice;
 				gsap.to(circle, {
 					duration: 0.25,
 					ease: "power1.inOut",
 					rotation: curRotation - 150,
-				}).then(() => rotationBtnComplete(nextDot));
+				});
 				updateButtonState(nextDot);
 			}
 	});

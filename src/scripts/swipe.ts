@@ -7,7 +7,15 @@ let isMobileDevice = window.matchMedia("(max-width: 768px)").matches;
 
 let createSwiper = (isMobileDevice: boolean) => {
 	if(swiper) {
-			swiper.destroy();
+		let swipers = document.querySelectorAll<HTMLElement>('.events-swiper');
+		if(swipers.length > 1) {
+			swipers.forEach(container => {
+				       const swiper = new Swiper(container);
+				       swiper.destroy();
+			})
+		} else {
+			swiper.destroy(); 
+		}
 	}
 	swiper = new Swiper(".events-swiper", {
 		modules: [Navigation, FreeMode, Pagination],
@@ -26,7 +34,7 @@ let createSwiper = (isMobileDevice: boolean) => {
 			clickable: true,
 		}
 	});
-	gsap.from(".events-swiper", { opacity: 0, y: 50, duration: 1, ease: "power2.out" });
+	gsap.from(".events-swiper", { opacity: 0, y: 100, duration: 1.5, ease: "power2.inOut" });
 }
 
 function updateSwiperForFlipSize() {
