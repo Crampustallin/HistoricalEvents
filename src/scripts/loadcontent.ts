@@ -89,8 +89,7 @@ let load = () => {
 		]
 	}];
 
-	let generateFront = (Obj: YearsData) => {
-		let i: number = 0;
+	let generateFront = (Obj: YearsData, i: number) => {
 
 		let loadDots = () => {
 			if(dotsListRow) {
@@ -101,6 +100,7 @@ let load = () => {
 				const innerText: HTMLElement = document.createElement('span');
 				innerText.className = "innerText";
 				innerText.innerHTML = (++i).toString();
+				dots.setAttribute("period" + i, "")
 				dateList.append(innerText);
 				dots.append(dateList);
 				dotsListRow.append(dots);
@@ -118,6 +118,7 @@ let load = () => {
 				endYear.innerHTML = Obj.years.to.toString();
 				const years = document.createElement('div');
 				years.className = "years";
+				years.setAttribute("period" + i, "");
 				years.append(startYear);
 				years.append(endYear);
 				yearsContainer.append(years);
@@ -139,13 +140,14 @@ let load = () => {
 					swiperSlide.append(paragraph);
 					swiperWrapper.append(swiperSlide);
 				});
+				swiperWrapper.setAttribute("period" + i, "");
 				eventsSwiper.appendChild(swiperWrapper);
 			}
 		}
 
 		return [loadDots, loadYears, loadSliderObjects];
 	};
-	movieData.map(d => generateFront(d).map(f => f()));
+	movieData.map((d, i) => generateFront(d, i).map(f => f()));
 }
 
 load();
