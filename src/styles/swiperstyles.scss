@@ -6,12 +6,8 @@
 .events-swiper {
 	width: 90%;
 	height: 35%;
-	display: none;
+	display: flex;
 	transition: display 0.2s ease, transform 0.2s ease;
-
-	&.active {
-		display: flex;
-	}
 }
 
 

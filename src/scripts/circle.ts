@@ -1,19 +1,25 @@
+import './loadDots';
+import periodData from './loadcontent';
 import gsap from 'gsap'
-import setAnimationToYear from './gsapYears';
+import setAnimationToYear from './loadYears';
 import updateSwiper from './swipe';
+import { YearsData } from '../types/yearsData';
 
 let circle:HTMLElement | null = document.querySelector(".circle");
 let dots: HTMLElement[] = gsap.utils.toArray<HTMLElement>(".dots");
 let dateList: HTMLElement[] = gsap.utils.toArray<HTMLElement>(".date-list");
+let swiperWrapper: HTMLElement | null = document.querySelector('.swiper-wrapper');
+let startYear: HTMLElement | null = document.querySelector('.start-year');
+let endYear: HTMLElement | null = document.querySelector('.end-year');
 let slice = 360 / dots.length;
 let curRotation = 0;
-let currentDot: NodeListOf<HTMLElement> = document.querySelectorAll(".active");
+let currentDot: HTMLElement | null = document.querySelector('.active');
 const prevBtn = document.getElementById("prev-button");
 const nextBtn = document.getElementById("next-button");
 
 let updateButtonState = (nextDot : HTMLElement) => {
-	prevBtn?.setAttribute("disabled", `${!nextDot?.nextElementSibling}`);
-	nextBtn?.setAttribute("disabled", `${!nextDot?.previousElementSibling}`);
+	prevBtn?.setAttribute("disabled", `${!nextDot?.previousElementSibling}`);
+	nextBtn?.setAttribute("disabled", `${!nextDot?.nextElementSibling}`);
 }
 
 function setup() {
@@ -36,7 +42,7 @@ setup();
 
 
 
-let removeCurrentActive = (current: HTMLElement) => {
+let removeCurrentActive = (current: HTMLElement | null) => {
 	if(current)
 		{
 			current.classList.remove('active');
@@ -46,25 +52,43 @@ let removeCurrentActive = (current: HTMLElement) => {
 
 
 const rotationBtnComplete = (dot: HTMLElement | null | undefined) => {
-	  if(dot) {
-		  let prevYears = currentDot[1];
-		  currentDot = document.querySelectorAll(`[date=${dot.getAttribute('date')}]`);
-		  currentDot.forEach(elem => elem.classList.add('active'));
-		  updateSwiper();
-		  setAnimationToYear(currentDot[1].firstChild, prevYears.firstChild?.textContent, currentDot[1].firstChild?.textContent);
-		  setAnimationToYear(currentDot[1].lastChild, prevYears.lastChild?.textContent, currentDot[1].lastChild?.textContent);
-	  }
+	if(dot) {
+		console.log(typeof dot.getAttribute('period-title'));
+		let filtered: YearsData | undefined = periodData.filter(p => p.title == dot.getAttribute('period-title')).pop();
+		if(filtered) {
+			console.log(filtered);
+			console.log(startYear);
+			setAnimationToYear(startYear, filtered.years.from);
+			setAnimationToYear(endYear, filtered.years.to);
+			if(swiperWrapper) {
+				swiperWrapper.innerHTML = "";
+				filtered.paragraphs.map(paragraph => {
+					let header = document.createElement('h3');
+					header.innerHTML = paragraph.title;
+					let content = document.createElement('p');
+					content.innerHTML = paragraph.content;
+					let slide = document.createElement('div');
+					slide.className = "swiper-slide";
+					slide.appendChild(header);
+					slide.appendChild(content);
+					swiperWrapper?.appendChild(slide);
+				});
+			}
+			updateSwiper();
+		}
+		dot.classList.add('active');
+		currentDot = dot;
+	}
 };
 
 
 let onClickCard = (event: MouseEvent) => {
 	let dot = event.target as HTMLElement;
-			currentDot.forEach((current:HTMLElement) => removeCurrentActive(current));
-	if(dot && currentDot[0] !== dot)
+	removeCurrentActive(currentDot);
+	if(dot && currentDot !== dot)
 		{
 			let style = dot.getAttribute('style');
 			let deg: number = 0;
-
 			if(style) {
 				let s = style.match(/rotate\((\d+)deg\)/);
 				if(s && s[1]) {
@@ -90,10 +114,11 @@ if(prevBtn) {
 	prevBtn.addEventListener("click", () => {
 		if(prevBtn.getAttribute('disabled') !== 'true')
 			{
-				let prevDot = currentDot[0]?.nextElementSibling as HTMLElement;
-			currentDot.forEach((current:HTMLElement) => removeCurrentActive(current));
-			rotationBtnComplete(prevDot);
-				curRotation += slice;
+				let prevDot = currentDot?.previousElementSibling as HTMLElement;
+				removeCurrentActive(currentDot);
+				console.log(prevDot);
+				rotationBtnComplete(prevDot);
+				curRotation -= slice;
 				gsap.to(circle, {
 					duration: 0.25,
 					ease: "power1.inOut",
@@ -102,16 +127,19 @@ if(prevBtn) {
 				updateButtonState(prevDot);
 			}
 	});
+	prevBtn.addEventListener('dblclick', (event) => {
+		event.preventDefault();
+	});
 }
 
 if(nextBtn) {
 	nextBtn.addEventListener("click", () => {
 		if(nextBtn.getAttribute('disabled') !== 'true')
 			{
-				let nextDot = currentDot[0]?.previousElementSibling as HTMLElement;
-			currentDot.forEach((current:HTMLElement) => removeCurrentActive(current));
-			rotationBtnComplete(nextDot);
-				curRotation -= slice;
+				let nextDot = currentDot?.nextElementSibling as HTMLElement;
+				removeCurrentActive(currentDot);
+				rotationBtnComplete(nextDot);
+				curRotation += slice;
 				gsap.to(circle, {
 					duration: 0.25,
 					ease: "power1.inOut",
@@ -119,5 +147,8 @@ if(nextBtn) {
 				});
 				updateButtonState(nextDot);
 			}
+	});
+	nextBtn.addEventListener('dblclick', (event) => {
+		event.preventDefault();
 	});
 }
