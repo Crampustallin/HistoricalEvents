@@ -22,16 +22,21 @@
 			color: #EF5DA8;
 		}
 	}
-	.manual-buttons {
+	.buttons-container {
 		position: absolute;
 		top:80%;
 		width: 6rem;
 		height: 2rem;
 		left: 4em;
+		z-index: 4;
+		.button-labels {
+			padding-bottom: 1rem;
+		}
+	}
+	.manual-buttons {
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
-		z-index: 4;
 		.period-button {
 			display: flex;
 			align-items: center;
@@ -81,9 +86,9 @@
 				font-size: 5em;
 			}
 		}
-		.manual-buttons {
+		.buttons-container {
 			width: 5rem;
-			top: 190%;
+			top: 180%;
 			left: 0;
 			.period-button {
 				width: 2em;

@@ -1,6 +1,6 @@
 import gsap from 'gsap';
 import Swiper from 'swiper';
-import { Navigation, FreeMode} from 'swiper/modules';
+import { Navigation, FreeMode, Pagination} from 'swiper/modules';
 
 let swiper: Swiper;
 let isMobileDevice = window.matchMedia("(max-width: 768px)").matches;
@@ -10,7 +10,7 @@ let createSwiper = (isMobileDevice: boolean) => {
 		swiper.destroy(); 
 	}
 	swiper = new Swiper(".events-swiper", {
-		modules: [Navigation, FreeMode],
+		modules: [Navigation, FreeMode, Pagination],
 		slidesPerView: isMobileDevice ? 2 : 3,
 		spaceBetween: isMobileDevice ? 50 : 30,
 		grabCursor: true,

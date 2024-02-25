@@ -10,7 +10,7 @@
   border: 1px solid #D4D4D4;
 }
 .date-list-row,
-.dots-list-row {
+.dots-list-row, .dots-list-row2 {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -37,6 +37,24 @@
 	&.active {
 		display: block;
 	}
+}
+
+.dots-list-row2 {
+	.title {
+	width: 100px;
+	word-break: break-word;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	color: #330662;
+	display: none;
+	font-weight: bold;
+	transition: fadeIn 0.4s ease-in-out;
+	&.active {
+		display: block;
+	}
+}
 }
 
 .dots {

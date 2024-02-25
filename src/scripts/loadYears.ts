@@ -1,8 +1,8 @@
 import { gsap } from "gsap";
 
 
-const setYearAnimation = (el: HTMLElement | null, newYear: number) => {
-	if(el) {
+const setYearAnimation = (el: HTMLElement | null, newYear: number | undefined) => {
+	if(el && newYear) {
 		gsap.to(el, {
 			textContent: newYear,
 			duration: 1,
