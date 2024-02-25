@@ -1,8 +1,8 @@
 import './loadDots';
 import periodData from './loadcontent';
 import gsap from 'gsap'
-import setAnimationToYear from './loadYears';
 import updateSwiper from './swipe';
+import setAnimationToYear from './loadYears';
 import { YearsData } from '../types/yearsData';
 
 let circle:HTMLElement | null = document.querySelector(".circle");
@@ -17,34 +17,8 @@ let currentDot: HTMLElement | null = document.querySelector('.active');
 const prevBtn = document.getElementById("prev-button");
 const nextBtn = document.getElementById("next-button");
 
-let updateButtonState = (nextDot : HTMLElement) => {
-	prevBtn?.setAttribute("disabled", `${!nextDot?.previousElementSibling}`);
-	nextBtn?.setAttribute("disabled", `${!nextDot?.nextElementSibling}`);
-}
-
-function setup() {
-	let radius: number = circle?.offsetWidth ?? 0;
-	let DEG2RAD: number = Math.PI / 180;
-	radius /= 2;
-	gsap.set(dots, {
-		x: i => radius * Math.sin(i * slice * DEG2RAD),
-		y: i => radius * Math.cos(i * slice * DEG2RAD),
-		rotation: i => i * slice,
-		xPercent: -50,
-		yPercent: -50
-	});
-	gsap.set(dateList, {
-		rotation: i => -(i * slice),
-	});
-}
-
-setup();
-
-
-
 let removeCurrentActive = (current: HTMLElement | null) => {
-	if(current)
-		{
+	if(current) {
 			current.classList.remove('active');
 			current.firstElementChild?.classList.remove('active');
 		}
@@ -73,6 +47,12 @@ const rotationBtnComplete = (dot: HTMLElement | null | undefined) => {
 					slide.appendChild(content);
 					swiperWrapper?.appendChild(slide);
 				});
+				gsap.from(swiperWrapper, {
+					opacity: 0,
+					y: 100,
+					duration: 1.5,
+					ease: "power2.inOut"
+			});
 			}
 			updateSwiper();
 		}
@@ -81,12 +61,12 @@ const rotationBtnComplete = (dot: HTMLElement | null | undefined) => {
 	}
 };
 
+let updateButtonState = (nextDot : HTMLElement) => {
+	prevBtn?.setAttribute("disabled", `${!nextDot?.previousElementSibling}`);
+	nextBtn?.setAttribute("disabled", `${!nextDot?.nextElementSibling}`);
+}
 
-let onClickCard = (event: MouseEvent) => {
-	let dot = event.target as HTMLElement;
-	removeCurrentActive(currentDot);
-	if(dot && currentDot !== dot)
-		{
+let activateDot = (dot: HTMLElement) => {
 			let style = dot.getAttribute('style');
 			let deg: number = 0;
 			if(style) {
@@ -97,7 +77,6 @@ let onClickCard = (event: MouseEvent) => {
 			}
 			curRotation = deg;
 			rotationBtnComplete(dot);
-
 			gsap.to(circle, {
 				duration: 0.75,
 				ease: "none",
@@ -105,7 +84,14 @@ let onClickCard = (event: MouseEvent) => {
 				overwrite: "auto",
 			});
 			updateButtonState(dot);
-		}
+};
+
+let onClickCard = (event: MouseEvent) => {
+	let dot = event.target as HTMLElement;
+	if(dot !== currentDot) {
+		removeCurrentActive(currentDot);
+		activateDot(dot);
+	}
 };
 
 dots.forEach((dot) => dot.addEventListener("click", onClickCard));
@@ -152,3 +138,24 @@ if(nextBtn) {
 		event.preventDefault();
 	});
 }
+
+function setup() {
+	let radius: number = circle?.offsetWidth ?? 0;
+	let DEG2RAD: number = Math.PI / 180;
+	radius /= 2;
+	gsap.set(dots, {
+		x: i => radius * Math.sin(i * slice * DEG2RAD),
+		y: i => radius * Math.cos(i * slice * DEG2RAD),
+		rotation: i => i * slice,
+		xPercent: -50,
+		yPercent: -50
+	});
+	gsap.set(dateList, {
+		rotation: i => -(i * slice),
+	});
+		if(currentDot) {
+			activateDot(currentDot);
+		}
+}
+
+setup();
