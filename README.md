@@ -7,9 +7,11 @@
 
 ```
  git clone https://github.com/Crampustallin/HistoricalEvents.git
-
+```
+```
     npm install
-
+```
+```
     npx webpack 
 
 ```
