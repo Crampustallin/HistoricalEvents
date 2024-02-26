@@ -1,16 +1,16 @@
 @use 'variables';
 
 .circle {
-  width: 25rem;
-  height: 25rem;
-  background: transparent;
-  border-radius: 50%;
-  color: #fff;
-  position: absolute; 
-  border: 1px solid #D4D4D4;
+	width: 25rem;
+	height: 25rem;
+	background: transparent;
+	border-radius: 50%;
+	color: #fff;
+	position: absolute; 
+	border: 1px solid #D4D4D4;
 }
 .circle2 {
-	left: 40%;
+	left: 39%;
 	top: 27%;
 	position: absolute;
 	width: 25rem;
@@ -19,13 +19,13 @@
 }
 .dots-number-container,
 .dots-list-row, .dots-list-row2  {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
 
- .date-list {
+.date-list {
 	position: absolute;
 	pointer-events: none;
 	top:50%;
@@ -34,8 +34,8 @@
 	display: inline-block;
 	.inner-text {
 		position: relative;
-			width: 2.7em;
-			height: 2.7em;
+		width: 2.7em;
+		height: 2.7em;
 		visibility: hidden;
 		gap: 10px;
 		&.active{ 
@@ -59,21 +59,22 @@
 }
 
 .dots {
-  position: absolute;
-  width: 0.4em;
-  height: 0.4em;
-  background: #42567A;
-  border-radius: 50%;
-  display: inline-block;
-  transition: ease 0.4s;
-  transform: translate(-50%, -50%);
+	position: absolute;
+	width: 0.4em;
+	height: 0.4em;
+	background: #42567A;
+	border-radius: 50%;
+	display: inline-block;
+	transition: ease 0.4s;
+	transform: translate(-50%, -50%);
+	cursor: pointer;
 
-  &.active {
-	  width: 2.7em;
-	  height: 2.7em;
-	  border: 1px solid rgba(48, 62, 88, 0.5);
-	  background: variables.$body-color;
-  }
+	&.active {
+		width: 2.7em;
+		height: 2.7em;
+		border: 1px solid rgba(48, 62, 88, 0.5);
+		background: variables.$body-color;
+	}
 }
 
 .dots-container:hover {
@@ -90,6 +91,32 @@
 
 @media (max-width: 768px) {
 	.circle, .circle2, .dots-number-container {
-		display: none;
+		visibility: hidden;
+	}
+	.dots-list-row {
+		visibility: visible;
+		position: absolute;
+		top: 190%;
+		display: flex;
+		justify-content: space-between;
+		width: 30%;
+		.dots-container{
+			display: inline-block;
+			.dots {
+				position: relative;
+				display: block;
+				opacity: 0.5;
+				&.active {
+					width: 0.5em;
+					height: 0.5em;
+					background-color: variables.$font-color;
+					opacity: 1;
+				}
+			}
+			.date-list {
+				display: none;
+			}
+		}
+
 	}
 }

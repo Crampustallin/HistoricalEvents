@@ -1,9 +1,8 @@
-import gsap from 'gsap';
+import isMobileDevice from './onResize';
 import Swiper from 'swiper';
 import { Navigation, FreeMode, Pagination} from 'swiper/modules';
 
 let swiper: Swiper;
-let isMobileDevice = window.matchMedia("(max-width: 768px)").matches;
 
 let createSwiper = (isMobileDevice: boolean) => {
 	if(swiper) {
@@ -24,17 +23,8 @@ let createSwiper = (isMobileDevice: boolean) => {
 	});
 }
 
-function updateSwiperForFlipSize() {
-	isMobileDevice = window.matchMedia("(max-width: 768px)").matches;
-	if (isMobileDevice) {
-		createSwiper(isMobileDevice);
-	}
-}
-
 createSwiper(isMobileDevice);
 
 let updateSwiper = () => createSwiper(isMobileDevice);
-
-window.addEventListener("resize", updateSwiperForFlipSize);
 
 export default updateSwiper;

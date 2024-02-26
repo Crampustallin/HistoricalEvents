@@ -50,6 +50,9 @@
 	display: none;
 }
 @media (max-width: 768px) {
+	body {
+		overflow-x: hidden ;
+	}
 	.events-swiper {
 		padding: 10% 0;
 		border-top: 1px solid #C7CDD9;
@@ -57,7 +60,7 @@
 		.swiper-slide {
 			justify-content: flex-start;
 			opacity: 0.2;
-			 transition: opacity 0.2s ease, transform 0.2s ease;
+			transition: opacity 0.2s ease, transform 0.2s ease;
 		}
 		.swiper-slide-active {
 			opacity: 1;

@@ -1,24 +1,23 @@
-@use 'mixins';
 @use 'reset';
 @use 'variables';
 @use 'swiperstyles.scss';
 @use 'years-styles.scss';
 @use 'circleStyle.scss';
 
-    html,
-    body {
-      position: relative;
-      height: 100%;
-    }
+html,
+body {
+	position: relative;
+	height: 100%;
+}
 
-    body {
-      margin: 0 7% 0 15%;
-      background: variables.$body-color;
-      font-family: variables.$main-font;
-      color: variables.$font-color;
-      border-left: 1px solid #D4D4D4;
-      border-right: 1px solid #D4D4D4;
-      	.vertical-line {
+body {
+	margin: 0 7% 0 15%;
+	background: variables.$body-color;
+	font-family: variables.$main-font;
+	color: variables.$font-color;
+	border-left: 1px solid #D4D4D4;
+	border-right: 1px solid #D4D4D4;
+	.vertical-line {
 		top: 0;
 		left: 50%;
 		width: 1px;
@@ -35,19 +34,19 @@
 		background-color: variables.$border-color;
 		z-index: -1;
 	}
-    }
+}
 
-    .header {
-	    position: absolute;
-	    top: 5rem;
-	    padding-left: 4em;
-	    border-left: 5px solid;
-	    border-image: linear-gradient(to bottom, variables.$start-color, variables.$end-color) 1;
-	    h1 {
-	    max-width: 20%;
-	    font-size: variables.$header-size;
-    }
-    }
+.header {
+	position: absolute;
+	top: 5rem;
+	padding-left: 4em;
+	border-left: 5px solid;
+	border-image: linear-gradient(to bottom, variables.$start-color, variables.$end-color) 1;
+	h1 {
+		max-width: 20%;
+		font-size: variables.$header-size;
+	}
+}
 
 @media (max-width: 768px) {
 	html, body {
@@ -66,5 +65,5 @@
 	.horizontal-line, .vertical-line {
 		display: none;
 	}
-		
+
 }
