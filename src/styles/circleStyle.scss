@@ -9,52 +9,53 @@
   position: absolute; 
   border: 1px solid #D4D4D4;
 }
-.date-list-row,
-.dots-list-row, .dots-list-row2 {
+.circle2 {
+	left: 40%;
+	top: 27%;
+	position: absolute;
+	width: 25rem;
+	height: 25rem;
+	z-index: -1;
+}
+.dots-number-container,
+.dots-list-row, .dots-list-row2  {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
-.dots-list-row .date-list {
+ .date-list {
 	position: absolute;
 	pointer-events: none;
 	top:50%;
 	left: 50%;
 	color: variables.$font-color;
-	display: none;
-	transition: ease 0.4s;
-	transform: translate(-50%, -50%);
+	display: inline-block;
 	.inner-text {
 		position: relative;
+			width: 2.7em;
+			height: 2.7em;
+		visibility: hidden;
 		gap: 10px;
-		span {
-			display: inline-block;
+		&.active{ 
+			visibility: visible;
 		}
-		font-weight: 900;
-	}
-	&.active {
-		display: block;
 	}
 }
 
-.dots-list-row2 {
-	.title {
+
+.dots-list-row2 .title {
 	width: 100px;
-	word-break: break-word;
 	position: absolute;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
 	color: #330662;
-	display: none;
 	font-weight: bold;
-	transition: fadeIn 0.4s ease-in-out;
+	position: absolute;
+	opacity: 0;
+	transition: opacity 0.2s ease;
 	&.active {
-		display: block;
+		opacity: 1;
 	}
-}
 }
 
 .dots {
@@ -72,24 +73,23 @@
 	  height: 2.7em;
 	  border: 1px solid rgba(48, 62, 88, 0.5);
 	  background: variables.$body-color;
-	  .date-list {
-		  display: block;
-	  }
   }
 }
 
-.dots:hover {
-	  width: 2.7em;
-	  height: 2.7em;
-	  background: variables.$body-color;
-	  border: 1px solid rgba(48, 62, 88, 0.5);
-	  .date-list {
-		  display: block;
-	  }
+.dots-container:hover {
+	.date-list .inner-text {
+		visibility: visible;
+	}
+	.dots {
+		width: 2.7em;
+		height: 2.7em;
+		background: variables.$body-color;
+		border: 1px solid rgba(48, 62, 88, 0.5);
+	} 
 }
 
 @media (max-width: 768px) {
-	.circle {
+	.circle, .circle2, .dots-number-container {
 		display: none;
 	}
 }

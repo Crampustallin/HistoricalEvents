@@ -6,6 +6,7 @@ import setAnimationToYear from './loadYears';
 import { YearsData } from '../types/yearsData';
 
 let circle:HTMLElement | null = document.querySelector(".circle");
+let circle2:HTMLElement | null = document.querySelector(".circle2");
 let dots: HTMLElement[] = gsap.utils.toArray<HTMLElement>(".dots");
 let dateList: HTMLElement[] = gsap.utils.toArray<HTMLElement>(".date-list");
 let dateList2: HTMLElement[] = gsap.utils.toArray<HTMLElement>(".title");
@@ -15,8 +16,9 @@ let endYear: HTMLElement | null = document.querySelector('.end-year');
 const dotsCount = dots.length;
 let slice = 360 / dotsCount;
 let curRotation = 0;
-let currentDot: HTMLElement | null = document.querySelector('.active');
+let currentDot: HTMLElement | null = document.querySelector('.dots.active');
 let currentTitle: HTMLElement | null = document.querySelector('.title.active');
+let currentDate: HTMLElement | null = document.querySelector('.inner-text.active');
 const prevBtn = document.getElementById("prev-button");
 const nextBtn = document.getElementById("next-button");
 const btnLabel: HTMLElement | null = document.querySelector(".button-labels");
@@ -26,15 +28,18 @@ let removeCurrentActive = (current: HTMLElement | null) => {
 			current.classList.remove('active');
 			current.firstElementChild?.classList.remove('active');
 			currentTitle?.classList.remove('active');
+			currentDate?.classList.remove('active');
 		}
 }
 
 
 const rotationBtnComplete = (dot: HTMLElement | null | undefined, filtered: YearsData | undefined) => {
 	if(dot) {
-			let currentNumber = dot.querySelector('.inner-text')?.innerHTML;
+			let currentNumber = dot.getAttribute("number");
 		if(btnLabel && currentNumber) {
 			btnLabel.innerHTML = `${parseInt(currentNumber) > 9 ? currentNumber : 0 + currentNumber}/${dotsCount > 9 ? dotsCount : '0' + dotsCount}`;
+			currentDate = (dateList.find(d => d.firstElementChild?.innerHTML === currentNumber)?.firstElementChild  as HTMLElement ?? null);
+			currentDate?.classList.add('active');
 		}
 		if(filtered) {
 			currentTitle = (dateList2.find(t => t.getAttribute('period-title') === filtered?.title) ?? null);
@@ -52,13 +57,13 @@ const rotationBtnComplete = (dot: HTMLElement | null | undefined, filtered: Year
 					slide.appendChild(content);
 					swiperWrapper?.appendChild(slide);
 				});
+			}
+			updateSwiper();
 				gsap.fromTo(swiperWrapper, {
 					opacity: 0,
 					y: 100,
 					ease: "power2.inOut"
 			}, {opacity: 1, y: 0});
-			}
-			updateSwiper();
 		}
 		dot.classList.add('active');
 		currentDot = dot;
@@ -66,8 +71,8 @@ const rotationBtnComplete = (dot: HTMLElement | null | undefined, filtered: Year
 };
 
 let updateButtonState = (nextDot : HTMLElement) => {
-	prevBtn?.setAttribute("disabled", `${!nextDot?.previousElementSibling}`);
-	nextBtn?.setAttribute("disabled", `${!nextDot?.nextElementSibling}`);
+	prevBtn?.setAttribute("disabled", `${!nextDot?.parentElement?.previousElementSibling}`);
+	nextBtn?.setAttribute("disabled", `${!nextDot?.parentElement?.nextElementSibling}`);
 }
 let activateDot = (dot: HTMLElement) => {
 			let style = dot.getAttribute('style');
@@ -85,7 +90,6 @@ let activateDot = (dot: HTMLElement) => {
 			if(swiperWrapper) {
 				swiperWrapper.style.opacity = "0";
 			}
-			//rotationBtnComplete(dot);
 			gsap.to(circle, {
 				duration: 0.75,
 				ease: "none",
@@ -93,9 +97,19 @@ let activateDot = (dot: HTMLElement) => {
 				overwrite: "auto",
 				onComplete: () => rotationBtnComplete(dot, filtered),
 			});
+			gsap.to(circle2, {
+				rotation: deg - 150,
+				duration: 0.75,
+				overwrite: "auto",
+			});
 			gsap.to(dateList2, {
 				rotation: -deg + 150,
 				duration: 0.75,
+				overwrite: "auto",
+			});
+			gsap.to(dateList, {
+				rotation: -deg + 150,
+				duration: 0,
 				overwrite: "auto",
 			});
 			updateButtonState(dot);
@@ -116,23 +130,30 @@ if(prevBtn) {
 	prevBtn.addEventListener("click", () => {
 		if(prevBtn.getAttribute('disabled') !== 'true')
 			{
-				let prevDot = currentDot?.previousElementSibling as HTMLElement;
+				let prevDot = currentDot?.parentElement?.previousElementSibling?.firstElementChild as HTMLElement;
 				let filtered: YearsData | undefined = periodData.filter(p => p.title == prevDot.getAttribute('period-title')).pop();
 				setAnimationToYear(startYear, filtered?.years.from);
 				setAnimationToYear(endYear, filtered?.years.to);
 				removeCurrentActive(currentDot);
-				console.log(prevDot);
 				rotationBtnComplete(prevDot, filtered);
 				curRotation -= slice;
 				gsap.to(circle, {
-					duration: 0.25,
+					duration: 0.35,
 					ease: "power1.inOut",
 					rotation: curRotation - 150,
 				});
+				gsap.to(circle2, {
+					rotation: curRotation - 150,
+					duration: 0.35,
+					overwrite: "auto",
+				});
 				gsap.to(dateList2, {
 					rotation: -(curRotation - 150) ,
-					duration: 0.75,
+					duration: 0.35,
 					overwrite: "auto",
+				});
+				gsap.set(dateList, {
+					rotation: -(curRotation - 150) ,
 				});
 				updateButtonState(prevDot);
 			}
@@ -143,7 +164,7 @@ if(nextBtn) {
 	nextBtn.addEventListener("click", () => {
 		if(nextBtn.getAttribute('disabled') !== 'true')
 			{
-				let nextDot = currentDot?.nextElementSibling as HTMLElement;
+				let nextDot = currentDot?.parentElement?.nextElementSibling?.firstElementChild as HTMLElement;
 				let filtered: YearsData | undefined = periodData.filter(p => p.title == nextDot.getAttribute('period-title')).pop();
 				setAnimationToYear(startYear, filtered?.years.from);
 				setAnimationToYear(endYear, filtered?.years.to);
@@ -151,14 +172,22 @@ if(nextBtn) {
 				rotationBtnComplete(nextDot, filtered);
 				curRotation += slice;
 				gsap.to(circle, {
-					duration: 0.25,
+					duration: 0.35,
 					ease: "power1.inOut",
 					rotation: curRotation - 150,
 				});
-				gsap.to(dateList2, {
-					rotation: -(curRotation - 150),
-					duration: 0.75,
+				gsap.to(circle2, {
+					rotation: curRotation - 150,
+					duration: 0.35,
 					overwrite: "auto",
+				});
+				gsap.to(dateList2, {
+					rotation: -(curRotation - 150) ,
+					duration: 0.35,
+					overwrite: "auto",
+				});
+				gsap.to(dateList, {
+					rotation: -(curRotation - 150) ,
 				});
 				updateButtonState(nextDot);
 			}
@@ -177,7 +206,10 @@ function setup() {
 		yPercent: -50
 	});
 	gsap.set(dateList, {
-		rotation: 150,
+		x: i => radius * Math.sin(i * slice * DEG2RAD),
+			y: i => radius * Math.cos(i * slice * DEG2RAD),
+		xPercent: -50,
+		yPercent: -50
 	});
 	gsap.set(dateList2, {
 		x: i => (radius * 1.30) * Math.sin(i * slice * DEG2RAD),
