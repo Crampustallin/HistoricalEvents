@@ -222,8 +222,8 @@ function setup() {
 			yPercent: -50
 		});
 		gsap.set(dateList2, {
-			x: i => (radius * 1.5) * Math.sin(i * slice * DEG2RAD),
-				y: i => (radius * 1.5) * Math.cos(i * slice * DEG2RAD),
+			x: i => radius * Math.sin(i * slice * DEG2RAD),
+				y: i => radius * Math.cos(i * slice * DEG2RAD),
 				xPercent: -50,
 			yPercent: -50
 		});
