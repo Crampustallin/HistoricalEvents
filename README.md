@@ -9,10 +9,10 @@
  git clone https://github.com/Crampustallin/HistoricalEvents.git
 ```
 ```
-    npm install
+npm install
 ```
 ```
-    npx webpack 
+npx webpack 
 
 ```
 
