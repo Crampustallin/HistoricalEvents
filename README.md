@@ -1,5 +1,7 @@
 # Historical events webpage
 
+The repository dedicated to pass the interview 
+
 ## prerequesites
  - node.js, npm
 
