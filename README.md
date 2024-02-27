@@ -11,7 +11,7 @@ Clone the repository
 ```
  git clone https://github.com/Crampustallin/HistoricalEvents.git
 ```
-Move to cloned directory and execute the command below in your terminal (or powershell) 
+Move to the cloned directory and execute the command below in your terminal (or powershell) 
 ```
 npm install
 ```
