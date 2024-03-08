@@ -21,5 +21,7 @@ npx webpack
 ```
 
 Start index.html from directory dist/
-        
-https://s3.ezgif.com/tmp/ezgif-3-0b27ada274.gif
+
+![](resources/ScreenRecording2024-03-09at00.20.42-ezgif.com-video-to-gif-converter.gif)
+
+![](resources/ScreenRecording2024-03-09at00.21.22-ezgif.com-video-to-gif-converter.gif)
