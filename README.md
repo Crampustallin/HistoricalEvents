@@ -22,3 +22,4 @@ npx webpack
 
 Start index.html from directory dist/
         
+https://s3.ezgif.com/tmp/ezgif-3-0b27ada274.gif
